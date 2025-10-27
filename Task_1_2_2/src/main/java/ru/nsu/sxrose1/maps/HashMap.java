@@ -17,7 +17,7 @@ public class HashMap<K, E> implements Map<K, E> {
     private static final int MIN_CAPACITY = 31;
     private static final double MIN_LOAD_FACTOR = 0.4;
 
-    /** capacity / load should be minimum at this */
+    /** capacity / load should be minimum at this. */
     private static final double MIN_LOAD_CAPACITY_FACTOR = 1.5;
 
     private enum SlotTag {
@@ -73,10 +73,10 @@ public class HashMap<K, E> implements Map<K, E> {
                     if (Objects.requireNonNull(data[ind].key).equals(key)) {
                         return Optional.of(ind);
                     }
+                    ind = nextProbe(ind);
                 }
+                default -> ind = nextProbe(ind);
             }
-
-            ind = nextProbe(ind);
         }
     }
 
@@ -103,7 +103,9 @@ public class HashMap<K, E> implements Map<K, E> {
     private void rehash(int newCap) {
         Slot[] oldData = data;
         data = new Slot[newCap];
-        for (int i = 0; i < newCap; i++) data[i] = new Slot(SlotTag.EMPTY, null, null);
+        for (int i = 0; i < newCap; i++) {
+            data[i] = new Slot(SlotTag.EMPTY, null, null);
+        }
         load = 0;
         deleted = 0;
 
@@ -136,7 +138,9 @@ public class HashMap<K, E> implements Map<K, E> {
      */
     HashMap(int capacity) {
         data = new Slot[capacity];
-        for (int i = 0; i < capacity; i++) data[i] = new Slot(SlotTag.EMPTY, null, null);
+        for (int i = 0; i < capacity; i++) {
+            data[i] = new Slot(SlotTag.EMPTY, null, null);
+        }
     }
 
     /** {@inheritDoc} */

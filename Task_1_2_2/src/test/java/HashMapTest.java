@@ -6,7 +6,7 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import ru.nsu.sxrose1.maps.Map;
 
-
+/** Tests for HashMap class. */
 public class HashMapTest {
     @Test
     void basicTest() {

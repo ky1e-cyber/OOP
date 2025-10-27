@@ -12,14 +12,22 @@ import java.util.function.Function;
  * @param <E> element type.
  */
 public interface Map<K, E> {
+    /**
+     * Entry of the map, contains key and element.
+     *
+     * @param key key.
+     * @param element element.
+     * @param <K> key type.
+     * @param <E> element type.
+     */
     record Entry<K, E>(K key, E element) {}
 
     /**
      * Creates new empty map.
      *
-     * @return new map.
      * @param <K> keys type.
      * @param <V> elements type.
+     * @return new map.
      */
     static <K, V> Map<K, V> empty() {
         return new HashMap<>();
@@ -62,6 +70,8 @@ public interface Map<K, E> {
     }
 
     /**
+     * Map entries.
+     *
      * @return set of map entries.
      */
     Set<Entry<K, E>> entries();
