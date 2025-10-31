@@ -91,11 +91,16 @@ loadScripts(document, 'script');</script>
 <dd><code>E</code> - element type.</dd>
 </dl>
 <dl class="notes">
+<dt>All Superinterfaces:</dt>
+<dd><code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a>&lt;<a href="Map.Entry.html" title="class in ru.nsu.sxrose1.maps">Map.Entry</a>&lt;K,<wbr>E&gt;&gt;</code></dd>
+</dl>
+<dl class="notes">
 <dt>All Known Implementing Classes:</dt>
 <dd><code><a href="HashMap.html" title="class in ru.nsu.sxrose1.maps">HashMap</a></code></dd>
 </dl>
 <hr>
-<div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">Map&lt;K,<wbr>E&gt;</span></div>
+<div class="type-signature"><span class="modifiers">public interface </span><span class="element-name type-name-label">Map&lt;K,<wbr>E&gt;</span><span class="extends-implements">
+extends <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a>&lt;<a href="Map.Entry.html" title="class in ru.nsu.sxrose1.maps">Map.Entry</a>&lt;K,<wbr>E&gt;&gt;</span></div>
 <div class="block">Map from K type keys to E type elements.</div>
 </section>
 <section class="summary">
@@ -160,14 +165,22 @@ V&gt;&nbsp;<a href="Map.html" title="interface in ru.nsu.sxrose1.maps">Map</a><w
 <div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab3">
 <div class="block">Inserts new element with key.</div>
 </div>
-<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default &lt;R&gt;&nbsp;<a href="Map.html" title="interface in ru.nsu.sxrose1.maps">Map</a><wbr>&lt;<a href="Map.html" title="type parameter in Map">K</a>,<wbr>R&gt;</code></div>
-<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#map(java.util.function.Function)" class="member-name-link">map</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;? super <a href="Map.html" title="type parameter in Map">E</a>,<wbr>? extends R&gt;&nbsp;f)</code></div>
+<div class="col-first even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default boolean</code></div>
+<div class="col-second even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#isEmpty()" class="member-name-link">isEmpty</a>()</code></div>
 <div class="col-last even-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
+<div class="block">Checks if map is empty.</div>
+</div>
+<div class="col-first odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code>default &lt;R&gt;&nbsp;<a href="Map.html" title="interface in ru.nsu.sxrose1.maps">Map</a><wbr>&lt;<a href="Map.html" title="type parameter in Map">K</a>,<wbr>R&gt;</code></div>
+<div class="col-second odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5"><code><a href="#map(java.util.function.Function)" class="member-name-link">map</a><wbr>(<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/util/function/Function.html" title="class or interface in java.util.function" class="external-link">Function</a>&lt;? super <a href="Map.html" title="type parameter in Map">E</a>,<wbr>? extends R&gt;&nbsp;f)</code></div>
+<div class="col-last odd-row-color method-summary-table method-summary-table-tab2 method-summary-table-tab5">
 <div class="block">Functor mapping.</div>
 </div>
 </div>
 </div>
 </div>
+<div class="inherited-list">
+<h3 id="methods-inherited-from-class-java.lang.Iterable">Methods inherited from interface&nbsp;java.lang.<a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Iterable.html" title="class or interface in java.lang" class="external-link">Iterable</a></h3>
+<code><a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Iterable.html#forEach(java.util.function.Consumer)" title="class or interface in java.lang" class="external-link">forEach</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Iterable.html#iterator()" title="class or interface in java.lang" class="external-link">iterator</a>, <a href="https://docs.oracle.com/en/java/javase/21/docs/api/java.base/java/lang/Iterable.html#spliterator()" title="class or interface in java.lang" class="external-link">spliterator</a></code></div>
 </section>
 </li>
 </ul>
@@ -259,6 +272,17 @@ V&gt;</span>&nbsp;<span class="return-type"><a href="Map.html" title="interface 
 <dl class="notes">
 <dt>Returns:</dt>
 <dd>set of map entries.</dd>
+</dl>
+</section>
+</li>
+<li>
+<section class="detail" id="isEmpty()">
+<h3>isEmpty</h3>
+<div class="member-signature"><span class="modifiers">default</span>&nbsp;<span class="return-type">boolean</span>&nbsp;<span class="element-name">isEmpty</span>()</div>
+<div class="block">Checks if map is empty.</div>
+<dl class="notes">
+<dt>Returns:</dt>
+<dd>true if map is empty.</dd>
 </dl>
 </section>
 </li>
