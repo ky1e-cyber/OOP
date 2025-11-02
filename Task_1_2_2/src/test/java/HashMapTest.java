@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.ConcurrentModificationException;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 import java.util.Optional;
@@ -13,13 +14,21 @@ import ru.nsu.sxrose1.maps.Map;
 /** Tests for HashMap class. */
 public class HashMapTest {
     @Test
-    void basicTest() {
+    void emptyTest() {
         Assertions.assertTrue(Map.empty().isEmpty());
+        Assertions.assertFalse(Map.<Integer, Integer>empty().insert(0, 0).isEmpty());
+        Assertions.assertFalse(
+                Map.<String, Integer>empty()
+                        .insert("One", 1)
+                        .insert("Two", 2)
+                        .insert("123123123123123123123123123123132131", 42)
+                        .isEmpty());
+    }
 
+    @Test
+    void findTest() {
         Map<Integer, String> m =
                 Map.<Integer, String>empty().insert(1, "One").insert(2, "Two").insert(3, "Three");
-
-        Assertions.assertFalse(m.isEmpty());
 
         Assertions.assertEquals(Optional.of("One"), m.find(1));
         Assertions.assertEquals(Optional.of("Two"), m.find(2));
@@ -27,7 +36,26 @@ public class HashMapTest {
 
         Assertions.assertEquals(Optional.empty(), m.find(4));
 
+        Assertions.assertThrows(NoSuchElementException.class, () -> m.deleteExcept(4));
+    }
+
+    @Test
+    void deleteTest() {
+        Map<Integer, String> m =
+                Map.<Integer, String>empty().insert(1, "One").insert(2, "Two").insert(3, "Three");
+
         m.delete(1);
+
+        Assertions.assertEquals(Optional.empty(), m.find(1));
+    }
+
+    @Test
+    void deleteExceptTest() {
+        Map<Integer, String> m =
+                Map.<Integer, String>empty().insert(1, "One").insert(2, "Two").insert(3, "Three");
+
+        m.delete(1);
+
         Assertions.assertEquals(Optional.empty(), m.find(1));
 
         Assertions.assertThrows(NoSuchElementException.class, () -> m.deleteExcept(1));
@@ -148,35 +176,47 @@ public class HashMapTest {
     }
 
     @Test
-    void iteratorTest() {
+    void basicIteratorTest() {
+        Assertions.assertEquals(
+                new Map.Entry<>("lol", 42),
+                Map.<String, Integer>empty().insert("lol", 42).iterator().next());
+    }
+
+    @Test
+    void endedIteratorTest() {
+        var m = Map.empty().insert("One", "1");
+        var iter = m.iterator();
+
+        Assertions.assertEquals(new Map.Entry<>("One", "1"), iter.next());
+        Assertions.assertThrows(NoSuchElementException.class, iter::next);
+    }
+
+    @Test
+    void longIteratorTest() {
+        var m = Map.<Integer, Integer>empty();
+
+        for (int i = 0; i < 128; i++) {
+            m.insert(i, i + 128);
+        }
+
+        ArrayList<Map.Entry<Integer, Integer>> acc = new ArrayList<>();
+        for (Map.Entry<Integer, Integer> integerIntegerEntry : m) {
+            acc.add(integerIntegerEntry);
+        }
+
+        Assertions.assertEquals(m.entries(), new HashSet<>(acc));
+    }
+
+    @Test
+    void emptyIteratorTest() {
         Assertions.assertThrows(
                 NoSuchElementException.class,
                 () -> Map.<Integer, Integer>empty().iterator().next());
+    }
 
-        var single = Map.<String, Integer>empty().insert("lol", 42);
-        var singleIter = single.iterator();
-
-        Assertions.assertEquals(new Map.Entry<>("lol", 42), singleIter.next());
-        Assertions.assertThrows(NoSuchElementException.class, singleIter::next);
-
+    @Test
+    void concurrentIteratorsTest() {
         var m = Map.<Integer, Integer>empty();
-        for (int i = 1; i <= 100; i++) {
-            m.insert(i, i);
-        }
-
-        var iter1 = m.iterator();
-
-        Assertions.assertDoesNotThrow(iter1::next);
-        Assertions.assertDoesNotThrow(iter1::next);
-
-        m.delete(1);
-        m.delete(2);
-
-        var iter2 = m.iterator();
-
-        Assertions.assertDoesNotThrow(iter2::next);
-        Assertions.assertThrows(ConcurrentModificationException.class, iter1::next);
-
         Supplier<ArrayList<Iterator<Map.Entry<Integer, Integer>>>> newBatch =
                 () -> {
                     ArrayList<Iterator<Map.Entry<Integer, Integer>>> iterBatch = new ArrayList<>();
