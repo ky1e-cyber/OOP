@@ -2,13 +2,13 @@ package ru.nsu.sxrose1.markdown;
 
 import java.util.List;
 
-public class UnorderedMDList extends MDList {
+public final class UnorderedMarkdownList extends MarkdownList {
     /**
      * Unordered list constructor.
      *
      * @param items items of the list.
      */
-    public UnorderedMDList(List<Item> items) {
+    public UnorderedMarkdownList(List<Item> items) {
         super(items);
     }
 

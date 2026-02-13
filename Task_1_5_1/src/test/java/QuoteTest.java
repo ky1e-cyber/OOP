@@ -1,5 +1,4 @@
-import static org.junit.jupiter.api.Assertions.assertEquals;
-
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import ru.nsu.sxrose1.markdown.Heading;
 import ru.nsu.sxrose1.markdown.Quote;
@@ -16,6 +15,6 @@ public class QuoteTest {
                 """
                         .trim();
 
-        assertEquals(expected, quote.toString());
+        Assertions.assertEquals(expected, quote.toString());
     }
 }
