@@ -9,7 +9,7 @@ import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
 /** Table element. */
-public class Table implements BlockElement {
+public final class Table implements BlockElement {
     /** Alignment of table columns. */
     public enum Alignment {
         LEFT,
@@ -17,9 +17,8 @@ public class Table implements BlockElement {
         CENTER
     }
 
-    public static final class Row {
-        public final List<InlineElement> cells;
-
+    /** Table row. */
+    public record Row(List<InlineElement> cells) {
         public Row(List<InlineElement> cells) {
             this.cells = List.copyOf(cells);
         }
@@ -92,12 +91,13 @@ public class Table implements BlockElement {
 
     private String alignmentRow(int[] widths) {
         BiFunction<Integer, Alignment, String> getMarker =
-                (width, alignment) ->
-                        switch (alignment) {
-                            case LEFT -> ":" + "-".repeat(width - 1);
-                            case RIGHT -> "-".repeat(width - 1) + ":";
-                            case CENTER -> ":" + "-".repeat(width - 2) + ":";
-                        };
+                (width, alignment) -> {
+                    return switch (alignment) {
+                        case LEFT -> ":" + "-".repeat(width - 1);
+                        case RIGHT -> "-".repeat(width - 1) + ":";
+                        case CENTER -> ":" + "-".repeat(width - 2) + ":";
+                    };
+                };
 
         StringBuilder sb = new StringBuilder("|");
 
@@ -120,10 +120,8 @@ public class Table implements BlockElement {
 
         StringBuilder sb = new StringBuilder();
 
-        // header
         sb.append(rowToString(rows.getFirst(), widths)).append("\n");
 
-        // alignment row
         sb.append(alignmentRow(widths)).append("\n");
 
         // rows
@@ -147,17 +145,30 @@ public class Table implements BlockElement {
         return rows.equals(table.rows) && alignments.equals(table.alignments);
     }
 
+    /** Table builder. */
     public static final class Builder {
 
         private final List<Row> rows = new ArrayList<>();
         private List<Alignment> alignments = new ArrayList<>();
         private int rowLimit = Integer.MAX_VALUE;
 
+        /**
+         * Set alignments for columns.
+         *
+         * @param alignments alignments.
+         * @return builder.
+         */
         public Builder withAlignments(Alignment... alignments) {
             this.alignments = List.of(alignments);
             return this;
         }
 
+        /**
+         * Set row limit.
+         *
+         * @param limit limit.
+         * @return builder.
+         */
         public Builder withRowLimit(int limit) {
             this.rowLimit = limit;
             return this;
@@ -170,6 +181,12 @@ public class Table implements BlockElement {
             return new Text(String.valueOf(value));
         }
 
+        /**
+         * Add row to table.
+         *
+         * @param values values of row.
+         * @return builder.
+         */
         public Builder addRow(Object... values) {
             if (rows.size() >= rowLimit) {
                 return this;
@@ -182,6 +199,11 @@ public class Table implements BlockElement {
             return this;
         }
 
+        /**
+         * Build table.
+         *
+         * @return new table.
+         */
         public Table build() {
             if (rows.isEmpty()) {
                 throw new IllegalStateException("Table must have at least one row");

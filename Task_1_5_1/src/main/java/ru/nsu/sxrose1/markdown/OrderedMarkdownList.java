@@ -2,13 +2,13 @@ package ru.nsu.sxrose1.markdown;
 
 import java.util.List;
 
-public class OrderedMDList extends MDList {
+public final class OrderedMarkdownList extends MarkdownList {
     /**
      * Ordered list element constructor.
      *
      * @param items items of the list.
      */
-    public OrderedMDList(List<Item> items) {
+    public OrderedMarkdownList(List<Item> items) {
         super(items);
     }
 

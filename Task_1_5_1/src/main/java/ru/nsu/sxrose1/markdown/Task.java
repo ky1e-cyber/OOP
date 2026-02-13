@@ -3,7 +3,7 @@ package ru.nsu.sxrose1.markdown;
 import java.util.Objects;
 
 /** Task element. */
-public class Task implements InlineElement {
+public final class Task implements InlineElement {
     private final InlineElement content;
     private final boolean checked;
 

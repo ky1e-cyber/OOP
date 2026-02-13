@@ -4,14 +4,14 @@ import java.util.List;
 import java.util.Objects;
 
 /** List element. */
-public abstract class MDList implements BlockElement {
+public abstract class MarkdownList implements BlockElement {
     /**
      * Item of list.
      *
      * @param content content of item.
      * @param nested optional nested sublist.
      */
-    public record Item(InlineElement content, MDList nested) {
+    public record Item(InlineElement content, MarkdownList nested) {
         public Item(InlineElement content) {
             this(content, null);
         }
@@ -19,7 +19,7 @@ public abstract class MDList implements BlockElement {
         /**
          * Check if item has nested sublist.
          *
-         * @return true if
+         * @return true if item has nested sublist
          */
         public boolean hasNested() {
             return Objects.nonNull(nested);
@@ -31,11 +31,12 @@ public abstract class MDList implements BlockElement {
             if (this == o) {
                 return true;
             }
-            if (!(o instanceof Item(InlineElement otherContent, MDList otherNested))) {
+            if (!(o instanceof Item otherItem)) {
                 return false;
             }
 
-            return Objects.equals(content, otherContent) && Objects.equals(nested, otherNested);
+            return Objects.equals(content, otherItem.content)
+                    && Objects.equals(nested, otherItem.nested);
         }
     }
 
@@ -46,7 +47,7 @@ public abstract class MDList implements BlockElement {
      *
      * @param items list of elements.
      */
-    protected MDList(List<Item> items) {
+    protected MarkdownList(List<Item> items) {
         this.items = List.copyOf(items);
     }
 
@@ -91,7 +92,7 @@ public abstract class MDList implements BlockElement {
         if (Objects.isNull(o) || getClass() != o.getClass()) {
             return false;
         }
-        MDList that = (MDList) o;
+        MarkdownList that = (MarkdownList) o;
         return items.equals(that.items);
     }
 
